@@ -6,11 +6,13 @@ import * as LoginActions from '../actions/login';
 
 import {navigate} from '../../services/navigation';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 function* login(action) {
   try {
     const {email, password} = action.payload;
 
-    yield call(api.request, {
+    const response = yield call(api.request, {
       method: 'POST',
       url: 'auth',
       data: {
@@ -18,6 +20,8 @@ function* login(action) {
         password,
       },
     });
+
+    yield AsyncStorage.setItem('@User_token', response.data.token);
 
     yield put(LoginActions.loginSuccess(email, password));
 
