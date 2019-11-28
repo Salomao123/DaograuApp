@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 
 import {
+  Image,
   View,
   Text,
   TextInput,
@@ -25,7 +26,10 @@ function Login({loading, error, loginRequest}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Daograu</Text>
+      <Image
+        source={require('../../assets/logo_daograu.png')}
+        style={styles.logo}
+      />
 
       {error && <Text style={styles.danger}>Usuário ou senha inváilda</Text>}
 
@@ -84,7 +88,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(LoginActions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

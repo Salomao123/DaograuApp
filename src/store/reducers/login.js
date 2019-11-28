@@ -18,7 +18,11 @@ export default function login(state = INITAL_STATE, action) {
         loading: false,
       };
     case 'LOGIN_FAILURE':
-      return {...state, error: true, loading: false};
+      return {
+        ...state,
+        error: true,
+        loading: false,
+      };
     default:
       return {...state};
   }

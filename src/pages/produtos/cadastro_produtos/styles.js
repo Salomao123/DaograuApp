@@ -6,25 +6,28 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 12,
   },
+  background: {
+    backgroundColor: '#ffffff',
+    flex: 1,
+  },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   btnNext: {
-    maxWidth: 100,
+    position: 'absolute',
+    bottom: 10,
+    width: '100%',
+    alignSelf: 'center',
     paddingHorizontal: 10,
     paddingVertical: 10,
-    marginHorizontal: 16,
-    marginVertical: 16,
-
     borderRadius: 4,
-    backgroundColor: '#F67F39',
+    backgroundColor: '#2ec4b6',
 
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    alignContent: 'flex-end',
+    justifyContent: 'center',
 
     elevation: 5,
   },

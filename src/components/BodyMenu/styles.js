@@ -1,33 +1,51 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: -150,
+  },
   content: {
-    width: Dimensions.get('screen').width,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexWrap: 'wrap',
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   items: {
     width: 400,
-    maxWidth: 100,
-    height: 100,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: '#dedede',
+    maxWidth: 120,
+    height: 120,
     justifyContent: 'center',
     borderRadius: 4,
     alignItems: 'center',
-    marginVertical: 5,
+    backgroundColor: '#fff',
     marginHorizontal: 5,
+    elevation: 5,
   },
   legend: {
     fontSize: 12,
     color: '#707070',
     paddingHorizontal: 10,
     textAlign: 'center',
+  },
+  base: {
+    bottom: 50,
+    height: 400,
+    maxHeight: 100,
+    zIndex: -1,
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    elevation: 2,
+  },
+  baseContainer: {
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

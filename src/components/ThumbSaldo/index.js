@@ -2,31 +2,26 @@ import React from 'react';
 
 import {View, Text, TouchableOpacity} from 'react-native';
 
+import {navigate} from '../../services/navigation';
+
 import styles from './styles';
 
 function ThumbSaldo() {
   return (
-    <View style={styles.card}>
-      <View>
+    <View style={styles.container}>
+      <View styles={styles.valor}>
         <Text style={styles.textTitle}>Saldo em conta</Text>
-        <View style={styles.valorContainer}>
-          <Text style={styles.valor1}>R$</Text>
-          <Text style={styles.valor2}>163</Text>
-          <Text style={styles.valor3}>,68</Text>
+        <View style={styles.containerValor}>
+          <Text style={styles.textValor}>R$ 3.892,43</Text>
+          <View style={styles.userContainer}>
+            <Text
+              onPress={() => alert('ainda não implementado')}
+              style={styles.textUser}>
+              SB
+            </Text>
+          </View>
         </View>
-      </View>
-      <View>
-        <TouchableOpacity
-          onPress={() => alert('ainda nao implementado!')}
-          style={styles.buttonMenu}>
-          <Text style={styles.textButtom}>Extrato</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonMenu}>
-          <Text style={styles.textButtom}>Depósitos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonMenu}>
-          <Text style={styles.textButtom}>Produtos</Text>
-        </TouchableOpacity>
+        <Text style={styles.textSubtitle}>Atualizado neste momento</Text>
       </View>
     </View>
   );

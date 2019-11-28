@@ -7,38 +7,33 @@ import {navigate} from '../../services/navigation';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function BodyMenu() {
+function BodyMenu({navigation}) {
   return (
-    <View style={styles.content}>
-      <TouchableOpacity
-        style={styles.items}
-        onPress={() => alert('ainda não implementado !')}>
-        <Icon name="inbox" size={30} color="#707070" />
+    <View style={styles.container}>
+      <View style={styles.center}>
+        <View style={styles.content}>
+          <TouchableOpacity
+            style={styles.items}
+            onPress={() => navigation.navigate('CadastroProdutos')}>
+            <Icon name="inbox" size={30} color="#30b2e2" />
 
-        <Text style={styles.legend}>Registrar Venda</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.items}>
-        <Icon name="edit" size={30} color="#707070" />
-        <Text style={styles.legend}>Realizar Orçamento</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.items}>
-        <Icon name="dollar" size={30} color="#707070" />
-        <Text style={styles.legend}>Lucros</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.items}
-        onPress={() => navigate('CadastroProdutos')}>
-        <Icon name="cart-plus" size={30} color="#707070" />
-        <Text style={styles.legend}>Cadastrar Produtos</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.items}>
-        <Icon name="user" size={30} color="#707070" />
-        <Text style={styles.legend}>Cadastrar vendedor</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.items}>
-        <Icon name="chart" size={30} color="#707070" />
-        <Text style={styles.legend}>Data Analysis</Text>
-      </TouchableOpacity>
+            <Text style={styles.legend}>Cadastrar Produto</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.items}>
+            <Icon name="user" size={30} color="#30b2e2" />
+            <Text style={styles.legend}>Cadastrar Vendendor</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.items}>
+            <Icon name="dollar" size={30} color="#30b2e2" />
+            <Text style={styles.legend}>Orçamento</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.base}>
+        <View style={styles.baseContainer}>
+          <Icon name="arrow-down" size={24} color={'#30b2e2'} />
+        </View>
+      </View>
     </View>
   );
 }

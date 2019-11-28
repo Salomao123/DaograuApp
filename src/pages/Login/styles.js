@@ -5,6 +5,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  logo: {
+    maxWidth: 150,
+    height: 150,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 18,

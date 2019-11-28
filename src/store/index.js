@@ -11,14 +11,12 @@ const sagaMiddleware = createSagaMiddleware();
 middlewares.push(sagaMiddleware);
 
 const composer = __DEV__
-  ? compose(
-      applyMiddleware(...middlewares),
-      console.tron.createEnhancer(),
-    )
+  ? compose(applyMiddleware(...middlewares), console.tron.createEnhancer())
   : applyMiddleware(...middlewares);
 
 const store = createStore(rootReducer, composer);
 
+console.tron.log(store.getState());
 sagaMiddleware.run(rootSaga);
 
 export default store;

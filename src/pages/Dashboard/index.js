@@ -4,13 +4,15 @@ import ThumbSaldo from '../../components/ThumbSaldo';
 import BodyMenu from '../../components/BodyMenu';
 import Header from '../../components/Header';
 
+import {View} from 'react-native';
+
+import styles from './styles';
+
 function Dashboard({navigation}) {
   return (
-    <>
-      <Header navigation={navigation} />
-      <ThumbSaldo />
-      <BodyMenu />
-    </>
+    <View style={styles.container}>
+      <Header navigation={navigation} logo={true} />
+    </View>
   );
 }
 

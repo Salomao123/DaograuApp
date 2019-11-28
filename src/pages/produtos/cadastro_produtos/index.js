@@ -1,16 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
 import styles from './styles';
 
-import Header from '../../../components/Header';
+import HeaderMenu from '../../../components/HeaderMenu';
 
 import StepIndicator from 'react-native-step-indicator';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import {Title, Subtitle, Container, Input, Select} from './styled';
+import {navigate} from '../../../services/navigation';
+
+import ListaDepositos from '../../Deposito/lista_depositos';
+
+//arquitetura flux
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as DepositosActions from '../../../store/actions/depositos';
+
+import {
+  Title,
+  Subtitle,
+  Container,
+  Input,
+  Select,
+  Link,
+  Small,
+  SubContainer,
+  TitleDetalhes,
+  Excluir,
+} from './styled';
 
 const labels = ['Passo 1', 'Passo 2', 'Passo 3', 'Passo 4', 'Passo 5'];
 const customStyles = {
@@ -37,9 +57,56 @@ const customStyles = {
   currentStepLabelColor: '#0F1E25',
 };
 
-function CadastroProdutos() {
+function CadastroProdutos({
+  navigation,
+  itemDepositoSelecionado,
+  excluirDepositos,
+}) {
   const [currentPosition, setCurrentPosition] = useState(0);
+
+  const [tipoProduto, setTipoProduto] = useState();
+  const [categoria, setCategoria] = useState();
+  const [subcategoria, setSubcategoria] = useState();
+  const [preco, setPreco] = useState();
   const [deposito, setDeposito] = useState();
+  const [codigoBarra, setCodigoBarra] = useState();
+  const [unidade, setUnidade] = useState();
+  const [valorUnidade, setValorUnidade] = useState();
+
+  //gambiarra => será que funcionar?
+
+  const [selecionado, setSelecionado] = useState([]);
+
+  useEffect(() => {
+    handleBarcodeAndPosition();
+  }, [itemDepositoSelecionado]);
+
+  function handleBarcodeAndPosition() {
+    try {
+      checkBarcode();
+      checkPosition();
+    } catch (err) {
+      console.tron.log(err.message);
+    }
+  }
+
+  function checkBarcode() {
+    const {barcodes} = navigation.getParam('barcodes', 'barcodes');
+
+    if (barcodes) {
+      setCodigoBarra(barcodes[0].data);
+    }
+  }
+
+  function checkPosition() {
+    const position = navigation.getParam('position', 'position');
+
+    if (position != 0) {
+      if (position === 2) {
+        setCurrentPosition(position);
+      }
+    }
+  }
 
   function onPageChange(position) {
     setCurrentPosition(position);
@@ -50,19 +117,20 @@ function CadastroProdutos() {
       case 0:
         return (
           <Container>
-            <Title>Dados do produto</Title>
-            <Subtitle>Insira os campos pertinentes ao produto.</Subtitle>
+            <Title>Código de barra</Title>
+            <Subtitle>
+              Insira o código de barra ou scaneie pela camera do celular
+            </Subtitle>
 
-            <View>
-              <Input placeholder="Tipo de produto" />
-              <Input placeholder="Categoria" />
-              <Input placeholder="Subcategoria" />
-              <Input
-                placeholder="Preço"
-                keyboardAppearance={'dark'}
-                keyboardType={'number-pad'}
-              />
-            </View>
+            <Input
+              placeholder="Inserir código de barra"
+              value={codigoBarra}
+              onChangeText={valor => setCodigoBarra(valor)}
+            />
+
+            <Link onPress={() => navigation.navigate('CodigoBarra')}>
+              Scanear código de barra
+            </Link>
           </Container>
         );
       case 1:
@@ -71,36 +139,108 @@ function CadastroProdutos() {
             <Title>Informações sobre depósito</Title>
             <Subtitle>Selecione o depósito que o produto ficará.</Subtitle>
 
-            <Select
-              selectedValue={deposito}
-              onValueChange={(itemValue, itemIndex) => setDeposito(itemValue)}>
-              <Select.Item label={'002 - Macapá - 67854069'}>
-                001 - Macapá - 68926024
-              </Select.Item>
-              <Select.Item label={'002 - Belém - 67854069'}>
-                002 - Belém - 67854069
-              </Select.Item>
-            </Select>
+            <ListaDepositos selecionar={true} />
           </Container>
         );
       case 2:
         return (
           <Container>
-            <Title>Código de barra</Title>
-            <Subtitle>Aponte para o código de barra para o produto</Subtitle>
+            <Title>Dados do produto</Title>
+            <Subtitle>Insira os campos pertinentes ao produto.</Subtitle>
+
+            <View>
+              <Input
+                value={tipoProduto}
+                onChangeText={item => setTipoProduto(item)}
+                placeholder="Tipo de produto"
+              />
+              <Input
+                value={categoria}
+                onChangeText={valor => setCategoria(valor)}
+                placeholder="Categoria"
+              />
+              <Input
+                value={subcategoria}
+                onChangeText={valor => setSubcategoria(valor)}
+                placeholder="Subcategoria"
+              />
+              <Input
+                value={preco}
+                onChangeText={valor => setPreco(valor)}
+                placeholder="Preço"
+                keyboardAppearance={'dark'}
+                keyboardType={'number-pad'}
+              />
+            </View>
           </Container>
         );
       case 3:
         return (
           <Container>
-            <Title>Informações financeiras</Title>
+            <Title>Unidades</Title>
+            <Subtitle>
+              Unidade de medida dos produtos a serem cadastrados
+            </Subtitle>
+
+            <Input
+              value={unidade}
+              onChangeText={valor => setUnidade(valor)}
+              placeholder="Exemplo: LT"
+            />
+            <Small>
+              Essa é a descrição da unidade de medida do insumo a ser
+              cadastrado. Descreva a unidade de medida equivalente ao produto.
+            </Small>
+            <Input
+              keyboardType="number-pad"
+              value={valorUnidade}
+              onChangeText={valor => setValorUnidade(valor)}
+              placeholder="Exemplo: 50"
+            />
+            <Small>
+              Esse campo justifica a inserção do valor que o produto comporta.
+              Exemplo: 50.
+            </Small>
           </Container>
         );
       case 4:
         return (
-          <Container>
-            <Title>Detalhes do produtos</Title>
-          </Container>
+          <SubContainer>
+            <TitleDetalhes>Detalhes do produtos</TitleDetalhes>
+            <Subtitle>Confira se as informações estão corretas.</Subtitle>
+
+            <Title>Tipo produto</Title>
+            <Subtitle>{tipoProduto}</Subtitle>
+
+            <Title>Categoria</Title>
+            <Subtitle>{categoria}</Subtitle>
+
+            <Title>Subcategoria</Title>
+            <Subtitle>{subcategoria}</Subtitle>
+
+            <Title>Preço</Title>
+            <Subtitle>R$ {preco}</Subtitle>
+
+            <Title>Deposito</Title>
+            <Subtitle>
+              {itemDepositoSelecionado.deposito_cep},{' '}
+              {itemDepositoSelecionado.deposito_nome}
+            </Subtitle>
+
+            <Title>Codigo de barra</Title>
+            <Subtitle>{codigoBarra}</Subtitle>
+
+            <Title>Unidade e medidas</Title>
+            <Subtitle>
+              {valorUnidade}/{unidade}
+            </Subtitle>
+
+            <TouchableOpacity
+              style={styles.btnNext}
+              onPress={() => 'ainda não implementado!'}>
+              <Text style={styles.textBnt}>CADASTRAR</Text>
+            </TouchableOpacity>
+          </SubContainer>
         );
       default:
         return <Text>Você precisa realizar o cadastro do produto</Text>;
@@ -108,36 +248,32 @@ function CadastroProdutos() {
   }
 
   return (
-    <>
-      <Header title={'Cadastrar produtos'} goback={true} />
+    <View style={styles.background}>
+      <HeaderMenu titulo="Cadastrar Produtos" goback="Dashboard" />
 
-      <StepIndicator
-        customStyles={customStyles}
-        currentPosition={currentPosition}
-        onPress={position => onPageChange(position)}
-        labels={labels}
-      />
+      <View
+        style={{
+          flex: 1,
+          marginVertical: 20,
+        }}>
+        <StepIndicator
+          customStyles={customStyles}
+          currentPosition={currentPosition}
+          onPress={position => onPageChange(position)}
+          labels={labels}
+        />
 
-      {handleForms(currentPosition)}
-
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <TouchableOpacity
-            style={styles.btnVoltar}
-            onPress={() => 'ainda não implementado!'}>
-            <Icon name="arrow-left" size={20} color="#ffff" />
-            <Text style={styles.textVoltar}>Voltar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnNext}
-            onPress={() => 'ainda não implementado!'}>
-            <Text style={styles.textBnt}>PŔOXIMO</Text>
-            <Icon name="arrow-right" size={20} color="#ffff" />
-          </TouchableOpacity>
-        </View>
+        {handleForms(currentPosition)}
       </View>
-    </>
+    </View>
   );
 }
 
-export default CadastroProdutos;
+const mapStateToProps = state => ({
+  itemDepositoSelecionado: state.depositos.depositoSelecionado,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(DepositosActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CadastroProdutos);
