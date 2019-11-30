@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   Image,
@@ -31,11 +31,11 @@ function Login({loading, error, loginRequest}) {
         style={styles.logo}
       />
 
-      {error && <Text style={styles.danger}>Usuário ou senha inváilda</Text>}
-
       <Text style={styles.subtitle}>
         Você pode usar isso para todos os produtos da Daograu
       </Text>
+
+      {error && <Text style={styles.danger}>Usuário ou senha inváilda</Text>}
 
       <TextInput
         autoCapitalize={'none'}

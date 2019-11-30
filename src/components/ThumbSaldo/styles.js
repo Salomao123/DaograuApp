@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   containerValor: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   userContainer: {

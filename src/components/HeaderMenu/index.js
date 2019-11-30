@@ -8,14 +8,20 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {navigate} from '../../services/navigation';
 
-function HeaderMenu({titulo = 'Daograu', goback}) {
+import UserContainer from '../../components/UserContainer';
+
+function HeaderMenu({titulo = 'Daograu', goback, user}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.btn} onPress={() => navigate(goback)}>
         <Icon name="long-arrow-left" color="#30b2e2" size={24} />
       </TouchableOpacity>
 
-      <Text style={styles.title}>{titulo}</Text>
+      {user ? (
+        <UserContainer info={true} />
+      ) : (
+        <Text style={styles.title}>{titulo}</Text>
+      )}
 
       <TouchableOpacity
         style={styles.btn}

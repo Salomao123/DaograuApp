@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 
 import styles from './styles';
 
@@ -17,7 +17,7 @@ import ListaDepositos from '../../Deposito/lista_depositos';
 //arquitetura flux
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as DepositosActions from '../../../store/actions/depositos';
+import * as ProdutoActions from '../../../store/actions/produtos';
 
 import {
   Title,
@@ -60,7 +60,8 @@ const customStyles = {
 function CadastroProdutos({
   navigation,
   itemDepositoSelecionado,
-  excluirDepositos,
+  insertProdutosRequest,
+  loading,
 }) {
   const [currentPosition, setCurrentPosition] = useState(0);
 
@@ -79,7 +80,7 @@ function CadastroProdutos({
 
   useEffect(() => {
     handleBarcodeAndPosition();
-  }, [itemDepositoSelecionado]);
+  }, []);
 
   function handleBarcodeAndPosition() {
     try {
@@ -110,6 +111,20 @@ function CadastroProdutos({
 
   function onPageChange(position) {
     setCurrentPosition(position);
+  }
+
+  function cadastrarProdutos() {
+    const data = {
+      deposito_id: itemDepositoSelecionado.id,
+      tipo_produto: tipoProduto,
+      codigo_barra: codigoBarra,
+      categoria,
+      subcategoria,
+      preco_produto: preco,
+      valor_unidade: valorUnidade,
+      unidade_medida: unidade,
+    };
+    insertProdutosRequest(data);
   }
 
   function handleForms(currentPosition) {
@@ -237,8 +252,12 @@ function CadastroProdutos({
 
             <TouchableOpacity
               style={styles.btnNext}
-              onPress={() => 'ainda não implementado!'}>
-              <Text style={styles.textBnt}>CADASTRAR</Text>
+              onPress={() => cadastrarProdutos()}>
+              {loading ? (
+                <ActivityIndicator color={'white'} size={24} />
+              ) : (
+                <Text style={styles.textBnt}>CADASTRAR</Text>
+              )}
             </TouchableOpacity>
           </SubContainer>
         );
@@ -271,9 +290,10 @@ function CadastroProdutos({
 
 const mapStateToProps = state => ({
   itemDepositoSelecionado: state.depositos.depositoSelecionado,
+  loading: state.produtos.loading,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(DepositosActions, dispatch);
+  bindActionCreators(ProdutoActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CadastroProdutos);

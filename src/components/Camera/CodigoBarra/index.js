@@ -9,12 +9,7 @@ import {
 } from 'react-native';
 
 import {RNCamera} from 'react-native-camera';
-
-import {navigate} from '../../../services/navigation';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-import Header from '../../../components/Header';
+import HeaderMenu from '../../../components/HeaderMenu';
 
 class CodigoBarra extends Component {
   takePicture = async () => {
@@ -30,7 +25,7 @@ class CodigoBarra extends Component {
 
     return (
       <>
-        <Header goback={'CadastroProdutos'} />
+        <HeaderMenu goback={'CadastroProdutos'} />
         <RNCamera
           ref={ref => {
             this.camera = ref;
