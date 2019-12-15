@@ -52,6 +52,7 @@ function CadastrarDeposito({loading, insertDepositosRequest}) {
               onChangeText={valor => setDepositoNome(valor)}
             />
             <TextInput
+              keyboardType="number-pad"
               placeholderTextColor={'#ffffff'}
               style={styles.input}
               placeholder="CEP"

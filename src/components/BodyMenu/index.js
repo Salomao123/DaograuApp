@@ -31,12 +31,6 @@ function BodyMenu() {
             <Icon name="home" size={30} color="#30b2e2" />
             <Text style={styles.legend}>Cadastrar Depósito</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.items}
-            onPress={() => navigate('Vendas')}>
-            <Icon name="dollar" size={30} color="#30b2e2" />
-            <Text style={styles.legend}>Vendas</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </View>

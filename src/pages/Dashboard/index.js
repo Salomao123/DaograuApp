@@ -9,6 +9,9 @@ import {View} from 'react-native';
 
 import styles from './styles';
 
+//screens
+import Vendas from '../Vendas';
+
 function Dashboard({navigation, email, loadUsersRequest}) {
   useEffect(() => {
     handlerUser();
@@ -20,6 +23,7 @@ function Dashboard({navigation, email, loadUsersRequest}) {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} logo={true} />
+      <Vendas />
     </View>
   );
 }

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    backgroundColor: '#3d5467',
+    backgroundColor: '#ddd',
     marginVertical: 5,
     elevation: 5,
     paddingHorizontal: 20,

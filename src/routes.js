@@ -9,6 +9,7 @@ import UserScreen from './pages/UserScreen';
 import CadastrarDeposito from './pages/Deposito/cadastrar_deposito';
 import CadastroUsuario from './pages/Usuario/cadastro_usuario';
 import Vendas from './pages/Vendas';
+import RegistrarVendas from './pages/Vendas/registrar_venda';
 
 //validacao
 import Validacao from './pages/Validacao';
@@ -44,6 +45,7 @@ const AppNavigator = (userLogged = false) =>
         ValidaDeposito: {screen: ValidaDeposito},
         CadastroUsuario: {screen: CadastroUsuario},
         Vendas: {screen: Vendas},
+        RegistrarVendas: {screen: RegistrarVendas},
       },
       {
         initialRouteName: userLogged ? 'Dashboard' : 'Login',

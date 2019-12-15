@@ -25,7 +25,7 @@ function ListaOpcoes() {
         style={styles.item}>
         <Text style={styles.default}>Cadastrar produto</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.item}>
+      <TouchableOpacity onPress={() => navigate('Vendas')} style={styles.item}>
         <Text style={styles.default}>Registrar Venda</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.item}>

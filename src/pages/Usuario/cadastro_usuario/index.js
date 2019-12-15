@@ -18,10 +18,10 @@ function CadastroUsuario({loading, insertVendedoresRequest}) {
   const [nome_completo, setNomeCompleto] = useState(
     'Enzo Gabriel do Nascimento Batista',
   );
-  const [email, setEmail] = useState('enzo.gabriel@gmail.com');
-  const [senha, setSenha] = useState('enzo123');
-  const [confirmarSenha, setConfirmarSenha] = useState('enzo123');
-  const [cargo_usuario, setCargoUsuario] = useState('Vendedor');
+  const [email, setEmail] = useState(null);
+  const [senha, setSenha] = useState(null);
+  const [confirmarSenha, setConfirmarSenha] = useState(null);
+  const [cargo_usuario, setCargoUsuario] = useState(null);
 
   function cadastrarVendedor() {
     const data = {

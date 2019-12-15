@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     backgroundColor: '#fff',
-    paddingHorizontal: 12,
+    paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 50,
     elevation: 5,
