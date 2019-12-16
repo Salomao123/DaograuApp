@@ -19,22 +19,12 @@ function ValidaCargo({user, cargo}) {
 
       <View style={styles.content}>
         <View>
-          <Title>Dados do cadastro</Title>
+          <Title>Dados do cargo</Title>
+        </View>
 
-          <View style={styles.item1}>
-            <Text style={styles.description}>Nome Completo</Text>
-            <Text style={styles.title}>{user.nome_completo}</Text>
-          </View>
-
-          <View style={styles.item}>
-            <Text style={styles.description}>E-mail</Text>
-            <Text style={styles.title}>{user.email}</Text>
-          </View>
-
-          <View style={styles.item}>
-            <Text style={styles.description}>Cargo</Text>
-            <Text style={styles.title}>{cargo.nome_cargo}</Text>
-          </View>
+        <View style={styles.item1}>
+          <Text style={styles.description}>Cargo</Text>
+          <Text style={styles.title}>{cargo.nome_cargo}</Text>
         </View>
       </View>
       <TouchableOpacity
@@ -48,7 +38,7 @@ function ValidaCargo({user, cargo}) {
 
 const mapStateToProps = state => ({
   user: state.users.insertUsers,
-  cargo: state.cargo.cargoSelecionado,
+  cargo: state.cargo.cargo,
 });
 
 export default connect(mapStateToProps)(ValidaCargo);

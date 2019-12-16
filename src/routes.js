@@ -15,6 +15,10 @@ import RegistrarVendas from './pages/Vendas/registrar_venda';
 import Validacao from './pages/Validacao';
 import ValidaDeposito from './pages/Validacao/valida_deposito';
 import ValidaUsuario from './pages/Validacao/valida_usuario';
+import ValidaCargo from './pages/Validacao/valida_cargo';
+
+//cargo
+import CadastrarCargo from './pages/Cargos/cadastrar_cargo';
 
 //components
 import CodigoBarra from './components/Camera/CodigoBarra';
@@ -48,6 +52,8 @@ const AppNavigator = (userLogged = false) =>
         Vendas: {screen: Vendas},
         RegistrarVendas: {screen: RegistrarVendas},
         ValidaUsuario: {screen: ValidaUsuario},
+        CadastrarCargo: {screen: CadastrarCargo},
+        ValidaCargo: {screen: ValidaCargo},
       },
       {
         initialRouteName: userLogged ? 'Dashboard' : 'Login',

@@ -19,3 +19,23 @@ export const loadCargoSelecionado = data => ({
     data,
   },
 });
+
+//insert
+
+export const insertCargoRequest = data => ({
+  type: 'INSERT_CARGO_REQUEST',
+  payload: {
+    data,
+  },
+});
+
+export const insertCargoSuccess = data => ({
+  type: 'INSERT_CARGO_SUCCESS',
+  payload: {
+    data,
+  },
+});
+
+export const insertCargoFailure = () => ({
+  type: 'INSERT_CARGO_FAILURE',
+});

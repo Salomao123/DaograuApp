@@ -5,12 +5,13 @@ import {connect} from 'react-redux';
 import * as UsersActions from '../../store/actions/users';
 import {bindActionCreators} from 'redux';
 
-import {View} from 'react-native';
+import {ScrollView} from 'react-native';
 
 import styles from './styles';
 
 //screens
 import Vendas from '../Vendas';
+import Atalhos from '../../components/Atalhos';
 
 function Dashboard({navigation, email, loadUsersRequest}) {
   useEffect(() => {
@@ -21,10 +22,11 @@ function Dashboard({navigation, email, loadUsersRequest}) {
     return loadUsersRequest(email);
   }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Header navigation={navigation} logo={true} />
       <Vendas />
-    </View>
+      <Atalhos />
+    </ScrollView>
   );
 }
 

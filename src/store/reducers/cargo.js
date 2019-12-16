@@ -29,6 +29,22 @@ export default function cargo(state = INITAL_STATE, action) {
         cargoSelecionado: action.payload.data,
       };
 
+    //insert
+    case 'INSERT_CARGO_REQUEST':
+      return {...state, loading: true};
+    case 'INSERT_CARGO_SUCCESS':
+      return {
+        ...state,
+        cargo: action.payload.data,
+        error: false,
+        loading: false,
+      };
+    case 'INSERT_CARGO_FAILURE':
+      return {
+        ...state,
+        error: true,
+        loading: false,
+      };
     default:
       return {...state};
   }

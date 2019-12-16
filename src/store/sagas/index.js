@@ -239,6 +239,29 @@ function* insertUser(action) {
   }
 }
 
+function* insertCargo(action) {
+  try {
+    const token = yield AsyncStorage.getItem('@User_token');
+
+    const {nome_cargo} = action.payload.data;
+
+    const response = yield call(api.request, {
+      method: 'POST',
+      url: 'cargos',
+      data: {nome_cargo},
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    yield put(CargoActions.insertCargoSuccess(response.data));
+
+    navigate('ValidaCargo');
+  } catch (err) {
+    yield put(CargoActions.insertCargoFailure());
+  }
+}
+
 export default function* rootSaga() {
   return yield all([
     takeLatest('LOGIN_REQUEST', login),
@@ -248,5 +271,6 @@ export default function* rootSaga() {
     takeLatest('INSERT_PRODUTO_REQUEST', inserirProdutos),
     takeLatest('LOAD_CATEGORIA_REQUEST', categorias),
     takeLatest('INSERT_USERS_REQUEST', insertUser),
+    takeLatest('INSERT_CARGO_REQUEST', insertCargo),
   ]);
 }

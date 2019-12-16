@@ -38,6 +38,12 @@ export const Title = styled.Text`
   font-size: 14px;
 `;
 
+export const Title2 = styled.Text`
+  font-weight: bold;
+  color: #fff;
+  align-self: center;
+  font-size: 14px;
+`;
 export const Subtitle = styled.Text`
   font-weight: normal;
   color: #010111;
@@ -73,4 +79,11 @@ export const Small = styled.Text`
   font-size: 12px;
   line-height: 16;
   color: #d0d0d0;
+`;
+
+export const ButtomPrimary = styled.TouchableOpacity`
+  background: #2ec4b6;
+  margin: 10px 10px;
+  padding: 10px;
+  border-radius: 10px;
 `;
