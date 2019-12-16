@@ -16,22 +16,24 @@ import HeaderMenu from '../../../components/HeaderMenu';
 import SwitchCargo from '../../../components/SwitchCategorias/SwitchCargos';
 
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as UserActions from '../../../store/actions/users';
 
-function CadastroUsuario({loading, insertVendedoresRequest}) {
+function CadastroUsuario({loading, insertUsersRequest, cargo}) {
   const [nome_completo, setNomeCompleto] = useState();
   const [email, setEmail] = useState(null);
   const [senha, setSenha] = useState(null);
   const [confirmarSenha, setConfirmarSenha] = useState(null);
-  const [cargo_usuario, setCargoUsuario] = useState(null);
 
   function cadastrarVendedor() {
     const data = {
       nome_completo,
       email,
       senha,
+      cargo_id: cargo.id,
     };
 
-    insertVendedoresRequest(data);
+    insertUsersRequest(data);
   }
 
   return (
@@ -49,11 +51,14 @@ function CadastroUsuario({loading, insertVendedoresRequest}) {
               onChangeText={valor => setNomeCompleto(valor)}
             />
             <Input
+              keyboardType="email-address"
+              autoCapitalize="none"
               placeholder="E-mail"
               value={email}
               onChangeText={valor => setEmail(valor)}
             />
             <Input
+              autoCapitalize="none"
               secureTextEntry
               placeholder="Senha"
               value={senha}
@@ -61,6 +66,7 @@ function CadastroUsuario({loading, insertVendedoresRequest}) {
             />
 
             <Input
+              autoCapitalize="none"
               secureTextEntry
               placeholder="Confirmar senha"
               value={confirmarSenha}
@@ -90,6 +96,10 @@ function CadastroUsuario({loading, insertVendedoresRequest}) {
 
 const mapStateToProps = state => ({
   loading: state.users.loading,
+  cargo: state.cargo.cargoSelecionado,
 });
 
-export default connect(mapStateToProps)(CadastroUsuario);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(UserActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CadastroUsuario);

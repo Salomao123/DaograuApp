@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ffffff',
   },
+
+  fullScreen: {
+    width: '100%',
+  },
+
   logo: {
     maxWidth: 150,
     height: 150,

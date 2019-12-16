@@ -17,8 +17,11 @@ export const loadUsersFailure = () => ({
 });
 
 //insert
-export const insertUsersRequest = () => ({
+export const insertUsersRequest = data => ({
   type: 'INSERT_USERS_REQUEST',
+  payload: {
+    data,
+  },
 });
 
 export const insertUsersSuccess = data => ({

@@ -10,39 +10,45 @@ import {navigate} from '../../../services/navigation';
 
 import HeaderMenu from '../../../components/HeaderMenu';
 
-function ValidaDeposito({depositos}) {
+import {Title, Subtitle, Container} from '../../../styles/Components';
+
+function ValidaUsuario({user, cargo}) {
   return (
     <View style={styles.container}>
       <HeaderMenu goback={'Dashboard'} titulo={'Cadastro Realizado!'} />
+
       <View style={styles.content}>
         <View>
-          <Text style={styles.title1}>Dados do cadastro</Text>
+          <Title>Dados do cadastro</Title>
 
           <View style={styles.item1}>
-            <Text style={styles.description}>Nome depósito</Text>
-            <Text style={styles.title}>{depositos.deposito_nome}</Text>
+            <Text style={styles.description}>Nome Completo</Text>
+            <Text style={styles.title}>{user.nome_completo}</Text>
           </View>
 
           <View style={styles.item}>
-            <Text style={styles.description}>Localização</Text>
-            <Text style={styles.title}>
-              {depositos.deposito_municipio}, {depositos.deposito_bairro},{' '}
-              {depositos.deposito_cep}, {depositos.deposito_uf_estado}
-            </Text>
+            <Text style={styles.description}>E-mail</Text>
+            <Text style={styles.title}>{user.email}</Text>
+          </View>
+
+          <View style={styles.item}>
+            <Text style={styles.description}>Cargo</Text>
+            <Text style={styles.title}>{cargo.nome_cargo}</Text>
           </View>
         </View>
       </View>
       <TouchableOpacity
         onPress={() => navigate('CadastrarDeposito')}
         style={styles.btnDefault}>
-        <Text style={styles.txtDefault}>Cadastrar novo depósito</Text>
+        <Text style={styles.txtDefault}>COMPARTILHAR</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const mapStateToProps = state => ({
-  depositos: state.depositos.inserirDepositos,
+  user: state.users.insertUsers,
+  cargo: state.cargo.cargoSelecionado,
 });
 
-export default connect(mapStateToProps)(ValidaDeposito);
+export default connect(mapStateToProps)(ValidaUsuario);

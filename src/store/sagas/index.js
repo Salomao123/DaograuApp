@@ -210,6 +210,35 @@ function* categorias() {
   }
 }
 
+function* insertUser(action) {
+  try {
+    const token = yield AsyncStorage.getItem('@User_token');
+    const {nome_completo, email, senha, cargo_id} = action.payload.data;
+
+    console.tron.log(action);
+
+    const response = yield call(api.request, {
+      method: 'POST',
+      url: 'users',
+      data: {
+        nome_completo,
+        email,
+        password: senha,
+        cargo_id,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    yield put(UsersActions.insertUsersSuccess(response.data));
+
+    navigate('ValidaUsuario');
+  } catch (err) {
+    yield put(UsersActions.insertUsersFailure());
+  }
+}
+
 export default function* rootSaga() {
   return yield all([
     takeLatest('LOGIN_REQUEST', login),
@@ -218,5 +247,6 @@ export default function* rootSaga() {
     takeLatest('INSERT_DEPOSITO_REQUEST', insertDepoitos),
     takeLatest('INSERT_PRODUTO_REQUEST', inserirProdutos),
     takeLatest('LOAD_CATEGORIA_REQUEST', categorias),
+    takeLatest('INSERT_USERS_REQUEST', insertUser),
   ]);
 }

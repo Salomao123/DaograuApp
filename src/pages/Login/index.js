@@ -9,6 +9,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import {Input, Container} from '../../styles/Components';
+
 import styles from './styles';
 
 //arquitetura flux
@@ -37,25 +39,23 @@ function Login({loading, error, loginRequest}) {
 
       {error && <Text style={styles.danger}>Usuário ou senha inváilda</Text>}
 
-      <TextInput
-        autoCapitalize={'none'}
-        keyboardAppearance={'dark'}
-        keyboardType={'email-address'}
-        style={styles.input}
-        placeholder="E-mail"
-        value={email}
-        onChangeText={valor => setEmail(valor)}
-      />
+      <View style={styles.fullScreen}>
+        <Input
+          autoCapitalize={'none'}
+          keyboardType={'email-address'}
+          placeholder="E-mail"
+          value={email}
+          onChangeText={valor => setEmail(valor)}
+        />
 
-      <TextInput
-        autoCapitalize={'none'}
-        keyboardAppearance={'dark'}
-        style={styles.input}
-        placeholder="Senha"
-        secureTextEntry
-        value={password}
-        onChangeText={valor => setPassword(valor)}
-      />
+        <Input
+          autoCapitalize={'none'}
+          placeholder="Senha"
+          secureTextEntry
+          value={password}
+          onChangeText={valor => setPassword(valor)}
+        />
+      </View>
 
       <TouchableOpacity style={styles.btn_entrar} onPress={() => entrar()}>
         {loading ? (
