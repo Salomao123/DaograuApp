@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, Image} from 'react-native';
 
 import styles from './styles';
 
@@ -26,7 +26,7 @@ import {
   SubContainer,
   TitleDetalhes,
   Excluir,
-} from './styled';
+} from '../../../styles/Components';
 
 const labels = ['Passo 1', 'Passo 2', 'Passo 3', 'Passo 4', 'Passo 5'];
 const customStyles = {
@@ -54,6 +54,12 @@ const customStyles = {
 };
 
 function RegistrarVenda({depositoSelecionado, users}) {
+  const [nome, setNome] = useState(null);
+  const [cnpj, setCnpj] = useState(null);
+  const [fone, setFone] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [cep, setCep] = useState(null);
+
   const [preco, setPreco] = useState(0);
   const [qntProduto, setQtdProduto] = useState([]);
 
@@ -67,10 +73,6 @@ function RegistrarVenda({depositoSelecionado, users}) {
     setCurrentPosition(position);
   }
 
-  function handleProdutos() {
-    return alert('ainda não implementado');
-  }
-
   function calculaPreco(produto) {
     try {
       setPreco(preco + produto.preco_produto);
@@ -82,19 +84,50 @@ function RegistrarVenda({depositoSelecionado, users}) {
     }
   }
 
+  function limpar() {
+    setQtdProduto([]);
+    setPreco(0);
+  }
+
   function handleForms(currentPosition) {
     switch (currentPosition) {
       case 0:
         return (
           <Container>
-            <Title>Dados do registro</Title>
-            <Subtitle>Insira informações a venda dos produtos</Subtitle>
+            <Title>Dados do Cliente</Title>
+            <Subtitle>Preencha os campos referente ao Cliente</Subtitle>
 
-            <Input placeholder="Nome" />
-            <Input placeholder="C.N.P.J" />
-            <Input placeholder="Fone" />
-            <Input placeholder="E-mail" />
-            <Input placeholder="CEP" />
+            <Input
+              placeholder="Nome"
+              value={nome}
+              onChangeText={valor => setNome(valor)}
+            />
+
+            <Input
+              keyboardType="number-pad"
+              placeholder="C.N.P.J"
+              value={cnpj}
+              onChangeText={valor => setCnpj(valor)}
+            />
+            <Input
+              keyboardType="number-pad"
+              placeholder="Fone"
+              value={fone}
+              onChangeText={valor => setFone(valor)}
+            />
+            <Input
+              placeholder="E-mail"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={valor => setEmail(valor)}
+            />
+
+            <Input
+              keyboardType="number-pad"
+              placeholder="CEP"
+              value={cep}
+              onChangeText={valor => setCep(valor)}
+            />
           </Container>
         );
 
@@ -146,7 +179,7 @@ function RegistrarVenda({depositoSelecionado, users}) {
                         <Icon
                           name="cart-plus"
                           size={24}
-                          color="#fff"
+                          color="#000"
                           style={{marginHorizontal: 10}}
                         />
                         <Text style={styles.preco_text}>
@@ -154,6 +187,12 @@ function RegistrarVenda({depositoSelecionado, users}) {
                         </Text>
                       </View>
                       <Text style={styles.preco_text}>R$ {preco}</Text>
+
+                      {qntProduto.length > 0 && (
+                        <TouchableOpacity onPress={() => limpar()}>
+                          <Excluir>Limpar</Excluir>
+                        </TouchableOpacity>
+                      )}
                     </View>
                   </>
                 ) : (
@@ -164,7 +203,7 @@ function RegistrarVenda({depositoSelecionado, users}) {
               </>
             ) : (
               <>
-                <Title>Nenhum depósito selecionado</Title>
+                <Text style={styles.warnning}>Nenhum depósito selecionado</Text>
               </>
             )}
           </Container>

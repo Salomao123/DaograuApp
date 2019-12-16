@@ -7,7 +7,7 @@ import styles from './styles';
 import ThumbSaldo from '../ThumbSaldo';
 import BodyMenu from '../BodyMenu';
 
-function Header({navigation}) {
+function Header({navigation, loadCargoRequest}) {
   return (
     <View style={styles.content}>
       <ThumbSaldo />

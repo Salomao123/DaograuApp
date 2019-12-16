@@ -8,16 +8,17 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import {Input, Title, Subtitle} from '../../../styles/Components';
+
 import styles from './styles';
 
 import HeaderMenu from '../../../components/HeaderMenu';
+import SwitchCargo from '../../../components/SwitchCategorias/SwitchCargos';
 
 import {connect} from 'react-redux';
 
 function CadastroUsuario({loading, insertVendedoresRequest}) {
-  const [nome_completo, setNomeCompleto] = useState(
-    'Enzo Gabriel do Nascimento Batista',
-  );
+  const [nome_completo, setNomeCompleto] = useState();
   const [email, setEmail] = useState(null);
   const [senha, setSenha] = useState(null);
   const [confirmarSenha, setConfirmarSenha] = useState(null);
@@ -42,45 +43,35 @@ function CadastroUsuario({loading, insertVendedoresRequest}) {
           <Text style={styles.title1}>Informações do usuário</Text>
 
           <View style={styles.item1}>
-            <TextInput
-              placeholderTextColor={'#707070'}
-              style={styles.input}
+            <Input
               placeholder="Nome completo"
               value={nome_completo}
               onChangeText={valor => setNomeCompleto(valor)}
             />
-            <TextInput
-              placeholderTextColor={'#707070'}
-              style={styles.input}
+            <Input
               placeholder="E-mail"
               value={email}
               onChangeText={valor => setEmail(valor)}
             />
-            <TextInput
+            <Input
               secureTextEntry
-              placeholderTextColor={'#707070'}
-              style={styles.input}
               placeholder="Senha"
               value={senha}
               onChangeText={valor => setSenha(valor)}
             />
 
-            <TextInput
+            <Input
               secureTextEntry
-              placeholderTextColor={'#707070'}
-              style={styles.input}
               placeholder="Confirmar senha"
               value={confirmarSenha}
               onChangeText={valor => setConfirmarSenha(valor)}
             />
 
-            <TextInput
-              placeholderTextColor={'#707070'}
-              style={styles.input}
-              placeholder="Cargo usuário"
-              value={cargo_usuario}
-              onChangeText={valor => setCargoUsuario(valor)}
-            />
+            <Title>Cargo</Title>
+
+            <Subtitle>Seleciona o cargo do usuário</Subtitle>
+
+            <SwitchCargo />
           </View>
         </View>
       </View>

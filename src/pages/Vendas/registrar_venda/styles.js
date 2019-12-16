@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#707070',
     paddingHorizontal: 20,
     paddingVertical: 20,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
   },
   icon: {
     marginHorizontal: 10,
@@ -47,11 +48,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: '#000',
     borderRadius: 50,
   },
   preco_text: {
-    color: '#fff',
+    color: '#000',
   },
   operadores: {
     fontSize: 20,

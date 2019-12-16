@@ -11,6 +11,8 @@ import * as LoginActions from '../actions/login';
 import * as DepositosActions from '../actions/depositos';
 import * as ProdutosActions from '../actions/produtos';
 import * as UsersActions from '../actions/users';
+import * as CategoriaActions from '../actions/categorias';
+import * as CargoActions from '../actions/cargo';
 
 function* login(action) {
   try {
@@ -31,10 +33,30 @@ function* login(action) {
 
     yield put(LoginActions.loginSuccess(email, password));
 
+    yield cargo();
+
     navigate('Dashboard');
   } catch (err) {
     yield put(LoginActions.loginFailure());
     console.log(err.message);
+  }
+}
+
+function* cargo() {
+  try {
+    const token = yield AsyncStorage.getItem('@User_token');
+
+    const response = yield call(api.request, {
+      method: 'GET',
+      url: 'cargos',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    yield put(CargoActions.loadCargoSuccess(response.data));
+  } catch (err) {
+    yield put(CargoActions.loadCargoFailure());
   }
 }
 
@@ -50,6 +72,8 @@ function* depositos() {
       },
     });
 
+    yield categorias();
+
     yield put(DepositosActions.depositosSuccess(response.data));
   } catch (err) {
     yield put(DepositosActions.depositosFailure());
@@ -61,9 +85,9 @@ function* inserirProdutos(action) {
   try {
     const {
       deposito_id,
+      categoria_id,
       tipo_produto,
       codigo_barra,
-      categoria,
       subcategoria,
       preco_produto,
       valor_unidade,
@@ -77,9 +101,9 @@ function* inserirProdutos(action) {
       url: 'produtos',
       data: {
         deposito_id,
+        categoria_id,
         tipo_produto,
         codigo_barra,
-        categoria,
         subcategoria,
         preco_produto,
         valor_unidade,
@@ -126,6 +150,8 @@ function* users(action) {
 
       yield put(UsersActions.loadUsersSuccess(response.data));
     }
+
+    yield cargo();
   } catch (err) {
     yield put(UsersActions.loadUsersFailure());
   }
@@ -166,6 +192,24 @@ function* insertDepoitos(action) {
   }
 }
 
+function* categorias() {
+  try {
+    const token = yield AsyncStorage.getItem('@User_token');
+
+    const response = yield call(api.request, {
+      method: 'GET',
+      url: 'categorias',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    yield put(CategoriaActions.loadCategoriaSuccess(response.data));
+  } catch (err) {
+    yield put(CategoriaActions.loadCategoriaFailure());
+  }
+}
+
 export default function* rootSaga() {
   return yield all([
     takeLatest('LOGIN_REQUEST', login),
@@ -173,5 +217,6 @@ export default function* rootSaga() {
     takeLatest('DEPOSITO_REQUEST', depositos),
     takeLatest('INSERT_DEPOSITO_REQUEST', insertDepoitos),
     takeLatest('INSERT_PRODUTO_REQUEST', inserirProdutos),
+    takeLatest('LOAD_CATEGORIA_REQUEST', categorias),
   ]);
 }

@@ -16,12 +16,14 @@ import * as DepositosActions from '../../../store/actions/depositos';
 
 import HeaderMenu from '../../../components/HeaderMenu';
 
+import {Input, Title, Subtitle, Container} from '../../../styles/Components';
+
 function CadastrarDeposito({loading, insertDepositosRequest}) {
-  const [deposito_nome, setDepositoNome] = useState('Última milha');
-  const [deposito_cep, setDepositoCep] = useState(68926024);
-  const [deposito_bairro, setDepositoBairro] = useState('Novo Horizonte');
-  const [deposito_municipio, setDepositoMunicipio] = useState('Santana');
-  const [deposito_uf_estado, setUfEstado] = useState('AP');
+  const [deposito_nome, setDepositoNome] = useState(null);
+  const [deposito_cep, setDepositoCep] = useState(0);
+  const [deposito_bairro, setDepositoBairro] = useState(null);
+  const [deposito_municipio, setDepositoMunicipio] = useState(null);
+  const [deposito_uf_estado, setUfEstado] = useState(null);
 
   function insertDepositos() {
     const data = {
@@ -44,40 +46,30 @@ function CadastrarDeposito({loading, insertDepositosRequest}) {
           <Text style={styles.title1}>Informações do depósitos</Text>
 
           <View style={styles.item1}>
-            <TextInput
-              placeholderTextColor={'#ffffff'}
-              style={styles.input}
+            <Input
               placeholder="Nome do deposito"
               value={deposito_nome}
               onChangeText={valor => setDepositoNome(valor)}
             />
-            <TextInput
+            <Input
               keyboardType="number-pad"
-              placeholderTextColor={'#ffffff'}
-              style={styles.input}
               placeholder="CEP"
               value={deposito_cep}
               onChangeText={valor => setDepositoCep(valor)}
             />
-            <TextInput
-              placeholderTextColor={'#ffffff'}
-              style={styles.input}
+            <Input
               placeholder="Bairro"
               value={deposito_bairro}
               onChangeText={valor => setDepositoBairro(valor)}
             />
 
-            <TextInput
-              placeholderTextColor={'#ffffff'}
-              style={styles.input}
+            <Input
               placeholder="Município"
               value={deposito_municipio}
               onChangeText={valor => setDepositoMunicipio(valor)}
             />
 
-            <TextInput
-              placeholderTextColor={'#ffffff'}
-              style={styles.input}
+            <Input
               placeholder="UF"
               value={deposito_uf_estado}
               onChangeText={valor => setUfEstado(valor)}

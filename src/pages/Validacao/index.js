@@ -10,7 +10,7 @@ import {navigate} from '../../services/navigation';
 
 import HeaderMenu from '../../components/HeaderMenu';
 
-function Validacao({produtos}) {
+function Validacao({produtos, categoria}) {
   return (
     <View style={styles.container}>
       <HeaderMenu goback={'Dashboard'} titulo={'Cadastro Realizado'} />
@@ -29,7 +29,7 @@ function Validacao({produtos}) {
           </View>
           <View style={styles.item}>
             <Text style={styles.description}>Categoria</Text>
-            <Text style={styles.title}>{produtos.categoria}</Text>
+            <Text style={styles.title}>{categoria.descricao}</Text>
           </View>
           <View style={styles.item}>
             <Text style={styles.description}>Subcategoria</Text>
@@ -58,6 +58,7 @@ function Validacao({produtos}) {
 
 const mapStateToProps = state => ({
   produtos: state.produtos.produtos.data,
+  categoria: state.categoria.categoriaSelecionada,
 });
 
 export default connect(mapStateToProps)(Validacao);

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import SwitchCategorias from '../../../components/SwitchCategorias';
 
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 
@@ -62,11 +63,11 @@ function CadastroProdutos({
   itemDepositoSelecionado,
   insertProdutosRequest,
   loading,
+  categoria,
 }) {
   const [currentPosition, setCurrentPosition] = useState(0);
 
   const [tipoProduto, setTipoProduto] = useState();
-  const [categoria, setCategoria] = useState();
   const [subcategoria, setSubcategoria] = useState();
   const [preco, setPreco] = useState();
   const [deposito, setDeposito] = useState();
@@ -116,9 +117,9 @@ function CadastroProdutos({
   function cadastrarProdutos() {
     const data = {
       deposito_id: itemDepositoSelecionado.id,
+      categoria_id: categoria.id,
       tipo_produto: tipoProduto,
       codigo_barra: codigoBarra,
-      categoria,
       subcategoria,
       preco_produto: preco,
       valor_unidade: valorUnidade,
@@ -169,22 +170,22 @@ function CadastroProdutos({
                 onChangeText={item => setTipoProduto(item)}
                 placeholder="Tipo de produto"
               />
-              <Input
-                value={categoria}
-                onChangeText={valor => setCategoria(valor)}
-                placeholder="Categoria"
-              />
-              <Input
-                value={subcategoria}
-                onChangeText={valor => setSubcategoria(valor)}
-                placeholder="Subcategoria"
-              />
+
               <Input
                 value={preco}
                 onChangeText={valor => setPreco(valor)}
                 placeholder="Preço"
                 keyboardAppearance={'dark'}
                 keyboardType={'number-pad'}
+              />
+              <Title>Categoria</Title>
+              <Subtitle>Seleciona uma categoria</Subtitle>
+
+              <SwitchCategorias />
+              <Input
+                value={subcategoria}
+                onChangeText={valor => setSubcategoria(valor)}
+                placeholder="Subcategoria"
               />
             </View>
           </Container>
@@ -228,7 +229,9 @@ function CadastroProdutos({
             <Subtitle>{tipoProduto}</Subtitle>
 
             <Title>Categoria</Title>
-            <Subtitle>{categoria}</Subtitle>
+            <Subtitle>
+              {categoria.descricao} / {categoria.id}
+            </Subtitle>
 
             <Title>Subcategoria</Title>
             <Subtitle>{subcategoria}</Subtitle>
@@ -291,6 +294,9 @@ function CadastroProdutos({
 const mapStateToProps = state => ({
   itemDepositoSelecionado: state.depositos.depositoSelecionado,
   loading: state.produtos.loading,
+
+  //categoria
+  categoria: state.categoria.categoriaSelecionada,
 });
 
 const mapDispatchToProps = dispatch =>
