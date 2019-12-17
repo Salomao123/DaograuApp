@@ -16,7 +16,7 @@ function Cargos({atalho}) {
           onPress={() => navigate('CadastrarCargo')}
           style={styles.card}>
           <View style={styles.column_flex_start}>
-            <Text style={styles.title}>Gerenciar cargos</Text>
+            <Text style={styles.title}>Cadastrar Cargo</Text>
           </View>
         </TouchableOpacity>
       )}

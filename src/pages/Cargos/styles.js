@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     maxWidth: 100,
-    backgroundColor: '#fff',
+    backgroundColor: '#30b2e2',
     paddingHorizontal: 15,
     marginVertical: 10,
     borderRadius: 100,
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 14,
-    color: '#30b2e2',
+    color: '#fff',
     textAlign: 'center',
   },
   icon: {

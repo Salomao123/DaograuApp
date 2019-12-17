@@ -16,6 +16,7 @@ import Validacao from './pages/Validacao';
 import ValidaDeposito from './pages/Validacao/valida_deposito';
 import ValidaUsuario from './pages/Validacao/valida_usuario';
 import ValidaCargo from './pages/Validacao/valida_cargo';
+import ValidaVenda from './pages/Validacao/valida_venda';
 
 //cargo
 import CadastrarCargo from './pages/Cargos/cadastrar_cargo';
@@ -54,6 +55,7 @@ const AppNavigator = (userLogged = false) =>
         ValidaUsuario: {screen: ValidaUsuario},
         CadastrarCargo: {screen: CadastrarCargo},
         ValidaCargo: {screen: ValidaCargo},
+        ValidaVenda: {screen: ValidaVenda},
       },
       {
         initialRouteName: userLogged ? 'Dashboard' : 'Login',

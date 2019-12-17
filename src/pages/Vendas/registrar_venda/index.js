@@ -11,12 +11,17 @@ import StepIndicator from 'react-native-step-indicator';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
+import {navigate} from '../../../services/navigation';
+
 //arquitetura flux
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {
   Title,
+  Title2,
   Subtitle,
   Container,
   Input,
@@ -26,6 +31,7 @@ import {
   SubContainer,
   TitleDetalhes,
   Excluir,
+  ButtomPrimary,
 } from '../../../styles/Components';
 
 const labels = ['Passo 1', 'Passo 2', 'Passo 3', 'Passo 4', 'Passo 5'];
@@ -89,6 +95,31 @@ function RegistrarVenda({depositoSelecionado, users}) {
     setPreco(0);
   }
 
+  function removeItemLista(id) {
+    qntProduto.splice(0, id);
+
+    console.tron.log(...qntProduto);
+  }
+
+  async function realizarVenda() {
+    try {
+      const data = {
+        nome,
+        cnpj,
+        fone,
+        email,
+        cep,
+        preco,
+      };
+
+      await AsyncStorage.setItem('Registro_venda', JSON.stringify(data));
+
+      navigate('ValidaVenda');
+    } catch (err) {
+      console.tron.log(err.message);
+    }
+  }
+
   function handleForms(currentPosition) {
     switch (currentPosition) {
       case 0:
@@ -116,6 +147,7 @@ function RegistrarVenda({depositoSelecionado, users}) {
               onChangeText={valor => setFone(valor)}
             />
             <Input
+              autoCapitalize="none"
               placeholder="E-mail"
               keyboardType="email-address"
               value={email}
@@ -211,15 +243,59 @@ function RegistrarVenda({depositoSelecionado, users}) {
       case 3:
         return (
           <Container>
-            <Title>Informações do Cliente</Title>
+            <Title>Conferir mercadoria</Title>
+            <Subtitle>Certifique-se se as mercadorias estão corretas</Subtitle>
+
+            {qntProduto.length === 0 && (
+              <Text style={styles.warnning}>Selecionar os produtos</Text>
+            )}
+
+            <FlatList
+              data={qntProduto}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => (
+                <View style={styles.card}>
+                  <View>
+                    <Text style={styles.textDefault}>{item.tipo_produto}</Text>
+                    <Text style={styles.textDefault}>{item.categoria}</Text>
+                  </View>
+                  <Text>R$ {item.preco_produto}</Text>
+
+                  <TouchableOpacity onPress={() => removeItemLista(item.id)}>
+                    <Icon name="times" size={24} color="#707070" />
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
           </Container>
         );
       case 4:
         return (
           <Container>
             <Title>Detalhes</Title>
+            <Subtitle>Certifique-se de que está tudo correto.</Subtitle>
 
-            <Image />
+            <Title>Nome</Title>
+            <Subtitle>{nome}</Subtitle>
+
+            <Title>CNPJ</Title>
+            <Subtitle>{cnpj}</Subtitle>
+
+            <Title>FONE</Title>
+            <Subtitle>{fone}</Subtitle>
+
+            <Title>E-mail</Title>
+            <Subtitle>{email}</Subtitle>
+
+            <Title>CEP</Title>
+            <Subtitle>{cep}</Subtitle>
+
+            <Title>PREÇO</Title>
+            <Subtitle>R$ {preco}</Subtitle>
+
+            <ButtomPrimary onPress={() => realizarVenda()}>
+              <Title2>Registrar Venda</Title2>
+            </ButtomPrimary>
           </Container>
         );
     }
